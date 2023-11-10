@@ -2,6 +2,7 @@ import torch
 import argparse
 
 from data.make_dataset import reader, build_labels
+from src.utils import Lang
 
 def get_argparse_arguments():
 
@@ -9,8 +10,8 @@ def get_argparse_arguments():
     parser = argparse.ArgumentParser(description='Train a model on the given dataset.')
 
     # Add the arguments
-    parser.add_argument('--data_dir', type=str, required=True, default="data/random_split", help='Directory containing the data')
-    parser.add_argument('--model_dir', type=str, required=True, default="model_weights", help='Directory to save the model')
+    parser.add_argument('--data_dir', type=str, default="data/random_split", help='Directory containing the data')
+    parser.add_argument('--model_dir', type=str, default="model_weights", help='Directory to save the model')
     parser.add_argument('--batch_size', type=int, default=32, help='Batch size for training')
     parser.add_argument('--num_epochs', type=int, default=10, help='Number of epochs to train')
     parser.add_argument('--learning_rate', type=float, default=0.001, help='Learning rate for the optimizer')
@@ -53,6 +54,11 @@ if __name__ == "__main__":
 
     # Build integer correspondences for each label type in dataset.
     fam2label = build_labels(train_targets) # fam2label is a dictionary mapping each family to a unique integer.
+    
+    # Build and get language.
+    lang = Lang()
+    word2id = lang.build_vocab(train_data)
+    print(device, word2id)
 
 
 
