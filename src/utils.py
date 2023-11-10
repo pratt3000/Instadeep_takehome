@@ -1,4 +1,7 @@
 import torch
+from data.make_dataset import reader
+
+
 class Lang:
     def __init__(self):
         self.voc = set()

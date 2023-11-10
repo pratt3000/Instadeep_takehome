@@ -2,7 +2,7 @@ import torch
 import argparse
 
 from data.make_dataset import reader, build_labels
-from src.utils import Lang
+from src.utils import Lang, SequenceDataset
 
 def get_argparse_arguments():
 
@@ -12,6 +12,7 @@ def get_argparse_arguments():
     # Add the arguments
     parser.add_argument('--data_dir', type=str, default="data/random_split", help='Directory containing the data')
     parser.add_argument('--model_dir', type=str, default="model_weights", help='Directory to save the model')
+    parser.add_argument('--max_seq_len', type=int, default=120, help='Max sequence length of protein (avoid changing this)')
     parser.add_argument('--batch_size', type=int, default=32, help='Batch size for training')
     parser.add_argument('--num_epochs', type=int, default=10, help='Number of epochs to train')
     parser.add_argument('--learning_rate', type=float, default=0.001, help='Learning rate for the optimizer')
@@ -58,7 +59,13 @@ if __name__ == "__main__":
     # Build and get language.
     lang = Lang()
     word2id = lang.build_vocab(train_data)
-    print(device, word2id)
+    print(f"AA dictionary formed. The length of dictionary is: {len(word2id)}.")
+
+    # Create datasets.
+    train_dataset = SequenceDataset(word2id, fam2label, args.max_seq_len, args.data_dir, "train")
+    dev_dataset = SequenceDataset(word2id, fam2label, args.max_seq_len, args.data_dir, "dev")
+    test_dataset = SequenceDataset(word2id, fam2label, args.max_seq_len, args.data_dir, "test")
+
 
 
 
