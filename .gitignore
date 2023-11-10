@@ -1,0 +1,6 @@
+data/random_split
+model_weights/
+
+__pycache__/
+```
+.vscode
