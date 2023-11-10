@@ -12,8 +12,12 @@ def get_argparse_arguments():
     # Add the arguments
     parser.add_argument('--data_dir', type=str, default="data/random_split", help='Directory containing the data')
     parser.add_argument('--model_dir', type=str, default="model_weights", help='Directory to save the model')
+    parser.add_argument('--gpu', action='store_true', help='Use GPU for training')
+    parser.add_argument('--cpu', action='store_true', help='Use CPU for training')
     parser.add_argument('--max_seq_len', type=int, default=120, help='Max sequence length of protein (avoid changing this)')
     parser.add_argument('--batch_size', type=int, default=32, help='Batch size for training')
+    parser.add_argument('--num_workers', type=int, default=0, help='num_workers for training/test/validation dataloaders')
+
     parser.add_argument('--num_epochs', type=int, default=10, help='Number of epochs to train')
     parser.add_argument('--learning_rate', type=float, default=0.001, help='Learning rate for the optimizer')
     parser.add_argument('--dropout_rate', type=float, default=0.5, help='Dropout rate for training')
@@ -24,8 +28,6 @@ def get_argparse_arguments():
     parser.add_argument('--log_interval', type=int, default=100, help='Interval for logging')
     parser.add_argument('--eval_interval', type=int, default=500, help='Interval for evaluation')
     parser.add_argument('--save_interval', type=int, default=500, help='Interval for saving the model')
-    parser.add_argument('--gpu', action='store_true', help='Use GPU for training')
-    parser.add_argument('--cpu', action='store_true', help='Use CPU for training')
     parser.add_argument('--early_stopping', action='store_true', help='Use early stopping')
     parser.add_argument('--resume', type=str, help='Resume training from this checkpoint')
     parser.add_argument('--config', type=str, help='Configuration file')
@@ -47,6 +49,7 @@ if __name__ == "__main__":
         if args.gpu:
             print("Warning: --gpu is set but no GPU is found on this machine. Using CPU instead.")
         device = "cpu"
+    print(f"Device: {device}")
 
     # Reads data from data files.
     train_data, train_targets = reader("train", args.data_dir)
@@ -65,6 +68,31 @@ if __name__ == "__main__":
     train_dataset = SequenceDataset(word2id, fam2label, args.max_seq_len, args.data_dir, "train")
     dev_dataset = SequenceDataset(word2id, fam2label, args.max_seq_len, args.data_dir, "dev")
     test_dataset = SequenceDataset(word2id, fam2label, args.max_seq_len, args.data_dir, "test")
+    print(f"INPUT_SHAPE: {next(iter(train_dataset))['sequence'].shape}, OUTPUT_SAMPLE: {next(iter(train_dataset))['target']}")
+
+    # Create dataloaders.
+    dataloaders = {}
+    dataloaders['train'] = torch.utils.data.DataLoader(
+        train_dataset, 
+        batch_size=args.batch_size, 
+        shuffle=True,
+        num_workers=args.num_workers,
+    )
+    dataloaders['dev'] = torch.utils.data.DataLoader(
+        dev_dataset,
+        batch_size=args.batch_size, 
+        shuffle=False,
+        num_workers=args.num_workers,
+    )
+    dataloaders['test'] = torch.utils.data.DataLoader(
+        test_dataset,
+        batch_size=args.batch_size, 
+        shuffle=False,
+        num_workers=args.num_workers,
+    )
+
+
+
 
 
 

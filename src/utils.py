@@ -1,6 +1,6 @@
 import torch
 from data.make_dataset import reader
-
+import numpy as np
 
 class Lang:
     def __init__(self):
