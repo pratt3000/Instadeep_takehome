@@ -1,14 +1,13 @@
-import torch
 import argparse
+import pytorch_lightning as pl
+import torch
 
 from data.make_dataset import reader, build_labels
-from src.utils import Lang, SequenceDataset
 from src.model import ProtCNN
-import pytorch_lightning as pl
+from src.utils import Lang, SequenceDataset
 
 
 def get_argparse_arguments():
-
     # Create the parser
     parser = argparse.ArgumentParser(description='Train a model on the given dataset.')
 
@@ -18,9 +17,11 @@ def get_argparse_arguments():
     parser.add_argument('--gpu', action='store_true', help='Use GPU for training')
     parser.add_argument('--num_gpus', type=int, default=0, help='number of gpus to use')
     parser.add_argument('--cpu', action='store_true', help='Use CPU for training')
-    parser.add_argument('--max_seq_len', type=int, default=120, help='Max sequence length of protein (avoid changing this)')
+    parser.add_argument('--max_seq_len', type=int, default=120,
+                        help='Max sequence length of protein (avoid changing this)')
     parser.add_argument('--batch_size', type=int, default=32, help='Batch size for training')
-    parser.add_argument('--num_workers', type=int, default=0, help='num_workers for training/test/validation dataloaders')
+    parser.add_argument('--num_workers', type=int, default=0,
+                        help='num_workers for training/test/validation dataloaders')
     parser.add_argument('--num_epochs', type=int, default=25, help='Number of epochs to train')
     parser.add_argument('--learning_rate', type=float, default=1e-2, help='Learning rate for the optimizer')
     parser.add_argument('--weight_decay', type=float, default=1e-2, help='Weight decay (L2 penalty)')
@@ -39,6 +40,7 @@ def get_argparse_arguments():
     args = parser.parse_args()
 
     return args
+
 
 if __name__ == "__main__":
 
@@ -63,8 +65,8 @@ if __name__ == "__main__":
     test_data, test_targets = reader("test", args.data_dir)
 
     # Build integer correspondences for each label type in dataset.
-    fam2label = build_labels(train_targets) # fam2label is a dictionary mapping each family to a unique integer.
-    
+    fam2label = build_labels(train_targets)  # fam2label is a dictionary mapping each family to a unique integer.
+
     # Build and get language.
     lang = Lang()
     word2id = lang.build_vocab(train_data)
@@ -78,47 +80,35 @@ if __name__ == "__main__":
     # Create dataloaders.
     dataloaders = {}
     dataloaders['train'] = torch.utils.data.DataLoader(
-        train_dataset, 
-        batch_size=args.batch_size, 
+        train_dataset,
+        batch_size=args.batch_size,
         shuffle=True,
         num_workers=args.num_workers,
     )
     dataloaders['dev'] = torch.utils.data.DataLoader(
         dev_dataset,
-        batch_size=args.batch_size, 
+        batch_size=args.batch_size,
         shuffle=False,
         num_workers=args.num_workers,
     )
     dataloaders['test'] = torch.utils.data.DataLoader(
         test_dataset,
-        batch_size=args.batch_size, 
+        batch_size=args.batch_size,
         shuffle=False,
         num_workers=args.num_workers,
     )
-    print(f"INPUT_SHAPE: {next(iter(dataloaders['test']))['sequence'].shape}, OUTPUT_SHAPE: {next(iter(dataloaders['test']))['target'].shape}")
+    print(
+        f"INPUT_SHAPE: {next(iter(dataloaders['test']))['sequence'].shape}, OUTPUT_SHAPE: {next(iter(dataloaders['test']))['target'].shape}")
 
     # Create model.
     model = ProtCNN(
-        num_classes = len(fam2label),
-        learning_rate = args.learning_rate, 
-        optimizer = args.optimizer, 
-        weight_decay = args.weight_decay, 
-        momentum = args.momentum
+        num_classes=len(fam2label),
+        learning_rate=args.learning_rate,
+        optimizer=args.optimizer,
+        weight_decay=args.weight_decay,
+        momentum=args.momentum
     )
 
     # Train model
     trainer = pl.Trainer(accelerator=device, max_epochs=args.num_epochs)
     trainer.fit(model, dataloaders['train'], dataloaders['dev'])
-
-
-
-
-
-
-
-
-    
-
-
-
-
