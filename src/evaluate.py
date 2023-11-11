@@ -1,12 +1,13 @@
-from src.model import ProtCNN
 import argparse
 import pickle
-from src.utils import SequenceDataset
-from torch.utils import data
-import torch
-from tqdm import tqdm
-import torchmetrics
 
+import torch
+import torchmetrics
+from torch.utils import data
+from tqdm import tqdm
+
+from src.model import ProtCNN
+from src.utils import SequenceDataset
 
 
 def get_argparse_arguments():
@@ -15,8 +16,11 @@ def get_argparse_arguments():
 
     # Add the arguments
     parser.add_argument('--test_set_dir', type=str, default="data/random_split/test", help='Path to the test dataset')
-    parser.add_argument('--model_checkpoint', type=str, default="lightning_logs/version_10/checkpoints/epoch=2-step=12738.ckpt", help='Directory for saved checkpoints')
-    parser.add_argument('--lang_params', type=str, default="lightning_logs/lang_params.pickle", help='Language params file')
+    parser.add_argument('--model_checkpoint', type=str,
+                        default="lightning_logs/version_10/checkpoints/epoch=2-step=12738.ckpt",
+                        help='Directory for saved checkpoints')
+    parser.add_argument('--lang_params', type=str, default="lightning_logs/lang_params.pickle",
+                        help='Language params file')
     parser.add_argument('--gpu', action='store_true', help='Use GPU for training')
     parser.add_argument('--batch_size', type=int, default=32, help='Batch size for testing')
     parser.add_argument('--num_workers', type=int, default=0, help='num_workers for test dataloader')
@@ -56,7 +60,7 @@ def evaluate_model(model, dataloader, device):
             cur_acc = train_acc(preds, targets)
             accuracy_batches.append(cur_acc)
 
-    acc = sum(accuracy_batches)/len(accuracy_batches)
+    acc = sum(accuracy_batches) / len(accuracy_batches)
 
     return acc
 
@@ -82,10 +86,12 @@ if __name__ == "__main__":
         lang_params = pickle.load(handle)
 
     # Construct language encoder and encoder input
-    lang_encoder = SequenceDataset(lang_params["word2id"], lang_params["fam2label"], lang_params["max_seq_len"], None, None)
+    lang_encoder = SequenceDataset(lang_params["word2id"], lang_params["fam2label"], lang_params["max_seq_len"], None,
+                                   None)
 
     # Construct dataloader
-    test_dataset = SequenceDataset(lang_params["word2id"], lang_params["fam2label"], lang_params["max_seq_len"], args.test_set_dir, split=None)
+    test_dataset = SequenceDataset(lang_params["word2id"], lang_params["fam2label"], lang_params["max_seq_len"],
+                                   args.test_set_dir, split=None)
     test_dataloader = torch.utils.data.DataLoader(
         test_dataset,
         batch_size=args.batch_size,

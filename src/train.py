@@ -127,4 +127,3 @@ if __name__ == "__main__":
     # Train model
     trainer = pl.Trainer(accelerator=device, max_epochs=args.num_epochs)
     trainer.fit(model, dataloaders['train'], dataloaders['dev'])
-

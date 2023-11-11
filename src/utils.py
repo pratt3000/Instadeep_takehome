@@ -33,9 +33,9 @@ class SequenceDataset(torch.utils.data.Dataset):
         self.fam2label = fam2label
         self.max_len = max_len
 
-        if data_path and not split: # For external tests
+        if data_path and not split:  # For external tests
             self.data, self.label = reader("NA", data_path, external_test=True)
-        if data_path and split: # For when we are training
+        if data_path and split:  # For when we are training
             self.data, self.label = reader(split, data_path)
 
     def __len__(self):

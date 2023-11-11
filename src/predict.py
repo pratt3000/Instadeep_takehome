@@ -1,8 +1,11 @@
-from src.model import ProtCNN
 import argparse
 import pickle
-from src.utils import SequenceDataset
+
 import torch
+
+from src.model import ProtCNN
+from src.utils import SequenceDataset
+
 
 def get_argparse_arguments():
     # Create the parser
@@ -10,8 +13,11 @@ def get_argparse_arguments():
 
     # Add the arguments
     parser.add_argument('--input_seq', type=str, default="NA", help='Input protein sequence')
-    parser.add_argument('--model_checkpoint', type=str, default="lightning_logs/version_10/checkpoints/epoch=2-step=12738.ckpt", help='Directory for saved checkpoints')
-    parser.add_argument('--lang_params', type=str, default="lightning_logs/lang_params.pickle", help='Language params file')
+    parser.add_argument('--model_checkpoint', type=str,
+                        default="lightning_logs/version_10/checkpoints/epoch=2-step=12738.ckpt",
+                        help='Directory for saved checkpoints')
+    parser.add_argument('--lang_params', type=str, default="lightning_logs/lang_params.pickle",
+                        help='Language params file')
     parser.add_argument('--gpu', action='store_true', help='Use GPU for training')
 
     # Parse the arguments
@@ -39,7 +45,8 @@ if __name__ == "__main__":
         lang_params = pickle.load(handle)
 
     # Construct language encoder and encoder input
-    lang_encoder = SequenceDataset(lang_params["word2id"], lang_params["fam2label"], lang_params["max_seq_len"], None, None)
+    lang_encoder = SequenceDataset(lang_params["word2id"], lang_params["fam2label"], lang_params["max_seq_len"], None,
+                                   None)
     x_encoded = lang_encoder.encode_single_sample(args.input_seq)
     x_encoded = x_encoded[0].reshape((1, 22, 120)).to(device)
 
@@ -53,4 +60,3 @@ if __name__ == "__main__":
     # Print values.
     print("Your Input was :: ", args.input_seq)
     print("Your Output is :: ", pred)
-
