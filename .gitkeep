@@ -1,3 +1,4 @@
 reports/
 model_weights/
 data/
+lightning_logs/

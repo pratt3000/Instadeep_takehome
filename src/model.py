@@ -51,6 +51,7 @@ class ProtCNN(pl.LightningModule):
 
     def __init__(self, num_classes, learning_rate=1e-2, optimizer="sgd", weight_decay=1e-2, momentum=0.9):
         super().__init__()
+        self.save_hyperparameters()
         self.model = torch.nn.Sequential(
             torch.nn.Conv1d(22, 128, kernel_size=1, padding=0, bias=False),
             ResidualBlock(128, 128, dilation=2),

@@ -1,6 +1,9 @@
 import argparse
+import pickle
+
 import pytorch_lightning as pl
 import torch
+from torch.utils import data
 
 from data.make_dataset import reader, build_labels
 from src.model import ProtCNN
@@ -37,9 +40,7 @@ def get_argparse_arguments():
     parser.add_argument('--config', type=str, help='Configuration file')
 
     # Parse the arguments
-    args = parser.parse_args()
-
-    return args
+    return parser.parse_args()
 
 
 if __name__ == "__main__":
@@ -77,28 +78,42 @@ if __name__ == "__main__":
     dev_dataset = SequenceDataset(word2id, fam2label, args.max_seq_len, args.data_dir, "dev")
     test_dataset = SequenceDataset(word2id, fam2label, args.max_seq_len, args.data_dir, "test")
 
+    # save data for use during evaluation
+    lang_params = {
+        "word2id": word2id,
+        "fam2label": fam2label,
+        "max_seq_len": args.max_seq_len,
+    }
+    with open('lightning_logs/lang_params.pickle', 'wb') as handle:
+        pickle.dump(lang_params, handle, protocol=pickle.HIGHEST_PROTOCOL)
+
     # Create dataloaders.
-    dataloaders = {}
+    dataloaders = dict()
     dataloaders['train'] = torch.utils.data.DataLoader(
         train_dataset,
         batch_size=args.batch_size,
         shuffle=True,
         num_workers=args.num_workers,
+        persistent_workers=True,
     )
     dataloaders['dev'] = torch.utils.data.DataLoader(
         dev_dataset,
         batch_size=args.batch_size,
         shuffle=False,
         num_workers=args.num_workers,
+        persistent_workers=True,
     )
     dataloaders['test'] = torch.utils.data.DataLoader(
         test_dataset,
         batch_size=args.batch_size,
         shuffle=False,
         num_workers=args.num_workers,
+        persistent_workers=True,
     )
     print(
-        f"INPUT_SHAPE: {next(iter(dataloaders['test']))['sequence'].shape}, OUTPUT_SHAPE: {next(iter(dataloaders['test']))['target'].shape}")
+        f"INPUT_SHAPE: {next(iter(dataloaders['test']))['sequence'].shape},"
+        f" OUTPUT_SHAPE: {next(iter(dataloaders['test']))['target'].shape}"
+    )
 
     # Create model.
     model = ProtCNN(

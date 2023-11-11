@@ -44,6 +44,12 @@ class SequenceDataset(torch.utils.data.Dataset):
 
         return {'sequence': seq, 'target': label}
 
+    def encode_single_sample(self, X, Y=None):
+        X = self.preprocess(X)
+        if Y:
+            Y = self.fam2label.get(Y, self.fam2label['<unk>'])
+        return X, Y
+
     def preprocess(self, text):
         seq = []
 
