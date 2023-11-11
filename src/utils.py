@@ -28,12 +28,13 @@ class Lang:
 
 class SequenceDataset(torch.utils.data.Dataset):
 
-    def __init__(self, word2id, fam2label, max_len, data_path, split):
+    def __init__(self, word2id, fam2label, max_len, data_path=None, split=None):
         self.word2id = word2id
         self.fam2label = fam2label
         self.max_len = max_len
 
-        self.data, self.label = reader(split, data_path)
+        if data_path:
+            self.data, self.label = reader(split, data_path)
 
     def __len__(self):
         return len(self.data)
@@ -44,11 +45,11 @@ class SequenceDataset(torch.utils.data.Dataset):
 
         return {'sequence': seq, 'target': label}
 
-    def encode_single_sample(self, X, Y=None):
-        X = self.preprocess(X)
-        if Y:
-            Y = self.fam2label.get(Y, self.fam2label['<unk>'])
-        return X, Y
+    def encode_single_sample(self, x, y=None):
+        x = self.preprocess(x)
+        if y:
+            y = self.fam2label.get(y, self.fam2label['<unk>'])
+        return x, y
 
     def preprocess(self, text):
         seq = []

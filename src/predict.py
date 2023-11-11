@@ -1,8 +1,8 @@
-# Inside your main script (after training)
 from src.model import ProtCNN
-import torch
 import argparse
-
+import pickle
+from src.utils import SequenceDataset
+import torch
 
 def get_argparse_arguments():
     # Create the parser
@@ -23,12 +23,19 @@ def get_argparse_arguments():
 
 if __name__ == "__main__":
 
-    # # Load model weights
-    # checkpoint_path = 'lightning_logs/version_9/checkpoints/epoch=2-step=12738.ckpt'
-    # model = ProtCNN(17930)
-    # checkpoint = torch.load(checkpoint_path)
-    # model.load_state_dict(checkpoint["state_dict"])
-
     # Load model weight [Easier way]
     model = ProtCNN.load_from_checkpoint("lightning_logs/version_10/checkpoints/epoch=2-step=12738.ckpt")
-    print(model)
+
+    # Get language params for encoding input.
+    lang_params_file = "lightning_logs/lang_params.pickle"
+    with open(lang_params_file, 'rb') as handle:
+        lang_params = pickle.load(handle)
+
+    # Construct language encoder and encoder input
+    lang_encoder = SequenceDataset(lang_params["word2id"], lang_params["fam2label"], lang_params["max_seq_len"], None, None)
+    x_encoded = lang_encoder.encode_single_sample("INPUT", y=None)
+    x_encoded = x_encoded[0].reshape((1, 22, 120)).to("mps") # formatting
+
+    pred = model(x_encoded)
+
+
