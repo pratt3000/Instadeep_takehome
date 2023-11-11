@@ -30,7 +30,6 @@ if __name__ == "__main__":
         if args.gpu:
             print("Warning: --gpu is set but no GPU is found on this machine. Using CPU instead.")
         device = "cpu"
-    print(f"Device: {device}")
 
     # Load model weight [Easier way]
     model = ProtCNN.load_from_checkpoint(args.model_checkpoint).to(device)
@@ -44,6 +43,14 @@ if __name__ == "__main__":
     x_encoded = lang_encoder.encode_single_sample(args.input_seq)
     x_encoded = x_encoded[0].reshape((1, 22, 120)).to(device)
 
+    # create reverse dict for decoding output
+    label2fam = {v: k for k, v in lang_params["fam2label"].items()}
+
+    # Get predictions from model
     pred = model(x_encoded)
-    print(pred)
+    pred = label2fam[pred[0].argmax().item()]
+
+    # Print values.
+    print("Your Input was :: ", args.input_seq)
+    print("Your Output is :: ", pred)
 
