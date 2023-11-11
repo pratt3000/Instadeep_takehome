@@ -2,10 +2,12 @@ import os
 import pandas as pd
 
 
-def reader(partition, data_path):
+def reader(partition, data_path, external_test=False):
     data = []
-    for file_name in os.listdir(os.path.join(data_path, partition)):
-        with open(os.path.join(data_path, partition, file_name)) as file:
+    folder_path = os.path.join(data_path, partition) if not external_test else data_path
+
+    for file_name in os.listdir(folder_path):
+        with open(os.path.join(folder_path, file_name)) as file:
             data.append(pd.read_csv(file, index_col=None, usecols=["sequence", "family_accession"]))
 
     all_data = pd.concat(data)

@@ -94,21 +94,21 @@ if __name__ == "__main__":
         batch_size=args.batch_size,
         shuffle=True,
         num_workers=args.num_workers,
-        persistent_workers=True,
+        persistent_workers=True if args.num_workers > 0 else False,
     )
     dataloaders['dev'] = torch.utils.data.DataLoader(
         dev_dataset,
         batch_size=args.batch_size,
         shuffle=False,
         num_workers=args.num_workers,
-        persistent_workers=True,
+        persistent_workers=True if args.num_workers > 0 else False,
     )
     dataloaders['test'] = torch.utils.data.DataLoader(
         test_dataset,
         batch_size=args.batch_size,
         shuffle=False,
         num_workers=args.num_workers,
-        persistent_workers=True,
+        persistent_workers=True if args.num_workers > 0 else False,
     )
     print(
         f"INPUT_SHAPE: {next(iter(dataloaders['test']))['sequence'].shape},"
@@ -127,3 +127,4 @@ if __name__ == "__main__":
     # Train model
     trainer = pl.Trainer(accelerator=device, max_epochs=args.num_epochs)
     trainer.fit(model, dataloaders['train'], dataloaders['dev'])
+
