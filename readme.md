@@ -1,6 +1,6 @@
 # How to run:
 
-```export PYTHONPATH="${PYTHONPATH}:/Users/pratt/Documents/Instadeep_takehome/"```
+## Using Docker
 
 ### Docker setup.
 ```docker build . -t instadeep:latest```
@@ -19,7 +19,7 @@ GPU: <br>
 Many other options are available as well, pl see ```python src/visualizations/visualize.py --help```
 
 ### Train model
-
+(Note: batch_size needs to be much smaller on CPU (bs=1). To use GPU use the --gpu flag.) <br>
 ```python src/train.py --batch_size=256```
 
 Many other options are available as well, pl see ```python src/train.py --help```
@@ -36,3 +36,16 @@ Many other options are available as well, pl see ```python src/predict.py --help
 
 Many other options are available as well, pl see ```python src/evaluate.py --help```
 
+## Without docker
+1. Install requirements: ```pip install -r requirements.txt```
+2. Export python path:
+```export PYTHONPATH="${PYTHONPATH}:/Users/pratt/Documents/Instadeep_takehome/"```
+3. Run any of the above commands. (Tested on Python version 3.10)
+
+## TODO:
+1. Add tests.
+2. Add more visualizations for training loss graphs.
+3. Add logger.
+4. Add more comments.
+5. Train new model.
+6. Create approach explaination pdf.
