@@ -1,5 +1,16 @@
 # How to run:
 
+## Download data
+Download the data from <a href="https://www.kaggle.com/googleai/pfam-seed-random-split">here</a> and place it in a folder.
+It's expected that the folder structure is as follows: ```--data_dir = "data/random_split"``` <br>
+```commandline
+data
+├── random_split
+│   ├── dev
+│   ├── test
+│   ├── train
+
+```
 ## Using Docker
 
 ### Docker setup.
@@ -46,8 +57,6 @@ Many other options are available as well, pl see ```python src/evaluate.py --hel
 1. Add tests.
 2. Add more visualizations for training loss graphs.
 3. Add logger.
-4. Add more comments.
 5. Train new model.
 6. Create approach explaination pdf.
-7. Add huggingface cupport for models
-8. Write for autodownload dataset if not present.
+7. Add huggingface support for models
