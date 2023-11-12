@@ -1,7 +1,8 @@
 # How to run:
 
-## Download data
-Download the data from <a href="https://www.kaggle.com/googleai/pfam-seed-random-split">here</a> and place it in a folder.
+## Downloading 
+### Download data
+Download the data from <a href="https://www.kaggle.com/googleai/pfam-seed-random-split">kaggle</a> and place it in a folder.
 It's expected that the folder structure is as follows:
 ```--data_dir = "data/random_split"```
 ```commandline
@@ -12,8 +13,11 @@ data
 │   ├── train
 
 ```
+### Download Language Encoder
+Download the language encoder from <a href="https://www.kaggle.com/googleai/pfam-seed-random-split">here</a> and place it in a folder. <br>
+```--lang_params = "path/to/lang_params/sample.pickle"```
 
-## Download model checkpoints
+### Download model checkpoints
 
 Download any model checkpoint and put them in a folder. You can then specify the parameter as follows in scripts. <br>
 ```commandline
@@ -49,6 +53,13 @@ Many other options are available as well, pl see ```python src/visualizations/vi
 ```python src/train.py --batch_size=256```
 
 Many other options are available as well, pl see ```python src/train.py --help```
+
+### Visualize training/valid loss/accuracy in graphs
+
+```python src/visualizations/visualize_training_vals.py --metrics_file "path/to/file/sample.csv" --save_path "path/to/folder"```
+
+Many other options are available as well, pl see ```python src/visualizations/visualize.py --help```
+
 
 ### Get prediction for a single test sample
 
