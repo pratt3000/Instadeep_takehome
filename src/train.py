@@ -125,5 +125,5 @@ if __name__ == "__main__":
     )
 
     # Train model
-    trainer = pl.Trainer(accelerator=device, max_epochs=args.num_epochs)
+    trainer = pl.Trainer(accelerator=device, max_epochs=args.num_epochs, val_check_interval=1)
     trainer.fit(model, dataloaders['train'], dataloaders['dev'])

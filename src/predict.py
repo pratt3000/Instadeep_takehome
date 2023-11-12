@@ -45,8 +45,13 @@ if __name__ == "__main__":
         lang_params = pickle.load(handle)
 
     # Construct language encoder and encoder input
-    lang_encoder = SequenceDataset(lang_params["word2id"], lang_params["fam2label"], lang_params["max_seq_len"], None,
-                                   None)
+    lang_encoder = SequenceDataset(
+        lang_params["word2id"],
+        lang_params["fam2label"],
+        lang_params["max_seq_len"],
+    None,
+       None
+    )
     x_encoded = lang_encoder.encode_single_sample(args.input_seq)
     x_encoded = x_encoded[0].reshape((1, 22, 120)).to(device)
 

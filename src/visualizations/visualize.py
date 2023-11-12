@@ -84,7 +84,9 @@ def generate_aminoacid_freq_distribution_graph(data, partition):
 
 
 if __name__ == "__main__":
+    print("This function may take a while to run...")
 
+    # Get the arguments
     args = get_argparse_arguments()
 
     # Reads data from data files.
@@ -108,3 +110,4 @@ if __name__ == "__main__":
     generate_label_distribution_graph(label_data, args.partition)
     generate_seq_len_distribution_graph(input_data, args.partition)
     generate_aminoacid_freq_distribution_graph(train_data, args.partition)
+    print(f"Images saved to {args.data_dir}")
