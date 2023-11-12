@@ -6,4 +6,4 @@ __pycache__/
 .vscode
 .idea/
 lightning_logs/*
-.DS_store
+.DS_Store
