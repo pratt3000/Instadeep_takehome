@@ -1,10 +1,14 @@
 # How to run:
 
-## Downloading 
+## Downloading
+
 ### Download data
-Download the data from <a href="https://www.kaggle.com/googleai/pfam-seed-random-split">kaggle</a> and place it in a folder.
+
+Download the data from <a href="https://www.kaggle.com/googleai/pfam-seed-random-split">kaggle</a> and place it in a
+folder.
 It's expected that the folder structure is as follows:
 ```--data_dir = "data/random_split"```
+
 ```commandline
 data
 ├── random_split
@@ -13,29 +17,35 @@ data
 │   ├── train
 
 ```
+
 ### Download Language Encoder
-Download the language encoder from <a href="https://www.kaggle.com/googleai/pfam-seed-random-split">here</a> and place it in a folder. <br>
+
+Download the language encoder from <a href="https://www.kaggle.com/googleai/pfam-seed-random-split">here</a> and place
+it in a folder. <br>
 ```--lang_params = "path/to/lang_params/sample.pickle"```
 
 ### Download model checkpoints
 
 Download any model checkpoint and put them in a folder. You can then specify the parameter as follows in scripts. <br>
+
 ```commandline
 --model_checkpoint = "path/to/model_weights/sample.ckpt"
 ```
+
 | Models       | Download link | test acc.    |
 |--------------|---------------|--------------|
 | Row 1 Cell 1 | Row 1 Cell 2  | Row 1 Cell 3 |
 | Row 2 Cell 1 | Row 2 Cell 2  | Row 2 Cell 3 |
 | Row 3 Cell 1 | Row 3 Cell 2  | Row 3 Cell 3 |
 
-
 ## Run using Docker
 
 ### Docker setup.
+
 ```docker build . -t instadeep:latest```
 
 ### Open docker bash
+
 CPU only: <br>
 ```docker run --rm -it --entrypoint bash instadeep:latest```
 
@@ -49,17 +59,17 @@ GPU: <br>
 Many other options are available as well, pl see ```python src/visualizations/visualize.py --help```
 
 ### Train model
+
 (Note: batch_size needs to be much smaller on CPU (bs=1). To use GPU use the --gpu flag.) <br>
 ```python src/train.py --batch_size=256```
 
 Many other options are available as well, pl see ```python src/train.py --help```
 
-### Visualize training/valid loss/accuracy in graphs
+### Visualize training metrics like loss, accuracy, etc.
 
 ```python src/visualizations/visualize_training_vals.py --metrics_file "path/to/file/sample.csv" --save_path "path/to/folder"```
 
 Many other options are available as well, pl see ```python src/visualizations/visualize.py --help```
-
 
 ### Get prediction for a single test sample
 
@@ -74,15 +84,17 @@ Many other options are available as well, pl see ```python src/predict.py --help
 Many other options are available as well, pl see ```python src/evaluate.py --help```
 
 ## Run without docker
+
 (Tested on Python version 3.10.13)
+
 1. Install requirements: ```pip install -r requirements.txt```
 2. Export python path:
-```export PYTHONPATH="${PYTHONPATH}:/Users/pratt/Documents/Instadeep_takehome/"```
-3. Run any of the above commands. 
+   ```export PYTHONPATH="${PYTHONPATH}:/Users/pratt/Documents/Instadeep_takehome/"```
+3. Run any of the above commands.
 
 ## TODO:
+
 1. Add tests.
-2. Add more visualizations for training loss graphs.
-3. Add logger.
-4. Train new model.
-5. Create approach explanation pdf.
+2. Add logger.
+3. Train new model.
+4. Create approach explanation pdf.

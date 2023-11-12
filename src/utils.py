@@ -8,6 +8,7 @@ class Lang:
     """
     Class for building the vocabulary and encoding the sequences.
     """
+
     def __init__(self):
         self.voc = set()
         self.rare_AAs = {'X', 'U', 'B', 'O', 'Z'}

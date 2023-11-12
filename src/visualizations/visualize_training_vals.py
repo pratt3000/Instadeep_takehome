@@ -1,7 +1,9 @@
 import argparse
-import pandas as pd
+
 import matplotlib.pyplot as plt
+import pandas as pd
 import seaborn as sns
+
 
 def get_argparse_arguments():
     # Create the parser
@@ -63,6 +65,7 @@ def generate_graph_loss(df, save_path, x_axis):
     # Display the plot
     plt.savefig(f"{save_path}/training_params_graph_{x_axis}_loss.png", dpi=300, bbox_inches='tight')
 
+
 if __name__ == "__main__":
     print("This function may take a while to run...")
 
@@ -79,4 +82,3 @@ if __name__ == "__main__":
     # Plot the training loss
     generate_graph_loss(metrics_df, args.save_path, 'epoch')
     generate_graph_loss(metrics_df, args.save_path, 'step')
-
