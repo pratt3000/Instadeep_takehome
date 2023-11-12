@@ -4,6 +4,16 @@ import pandas as pd
 
 
 def reader(partition, data_path, external_test=False):
+    """
+    Read the data from the files.
+    Args:
+        partition: train, dev, test
+        data_path: path to the data
+        external_test: used for the external test set.
+
+    Returns: sequences, labels
+
+    """
     data = []
     folder_path = os.path.join(data_path, partition) if not external_test else data_path
 
@@ -17,6 +27,15 @@ def reader(partition, data_path, external_test=False):
 
 
 def build_labels(targets):
+    """
+    Build integer correspondences for each label type in dataset.
+    Args:
+        targets: targets from the dataset
+
+    Returns:
+        fam2label: a dictionary mapping each family to a unique integer.
+
+    """
     unique_targets = targets.unique()
     fam2label = {target: i for i, target in enumerate(unique_targets, start=1)}
     fam2label['<unk>'] = 0
