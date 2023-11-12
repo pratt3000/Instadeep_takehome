@@ -39,6 +39,9 @@ class ResidualBlock(torch.nn.Module):
                                      kernel_size=3, bias=False, padding=1)
 
     def forward(self, x):
+        """
+        Forward pass of the residual block.
+        """
         # Execute the required layers and functions
         activation = F.relu(self.bn1(x))
         x1 = self.conv1(activation)
@@ -50,8 +53,20 @@ class ResidualBlock(torch.nn.Module):
 class ProtCNN(pl.LightningModule):
 
     def __init__(self, num_classes, learning_rate=1e-2, optimizer="sgd", weight_decay=1e-2, momentum=0.9):
+        """
+        Initialize the model.
+        Args:
+            num_classes: number of classes in the dataset.
+            learning_rate: learning rate for the optimizer.
+            optimizer: name of the optimizer to use.
+            weight_decay: value of the weight decay for the optimizer.
+            momentum: value of the momentum for the optimizer.
+        """
         super().__init__()
+        # Save hyperparameters for checkpointing.
         self.save_hyperparameters()
+
+        # Define the model.
         self.model = torch.nn.Sequential(
             torch.nn.Conv1d(22, 128, kernel_size=1, padding=0, bias=False),
             ResidualBlock(128, 128, dilation=2),
@@ -73,6 +88,16 @@ class ProtCNN(pl.LightningModule):
         return self.model(x.float())
 
     def training_step(self, batch, batch_idx):
+        """
+        The training step is executed on each batch of the training data.
+        Args:
+            batch: one batch of the training data
+            batch_idx: index of the batch
+
+        Returns:
+            loss: the loss of the model on this batch
+
+        """
         x, y = batch['sequence'], batch['target']
         y_hat = self(x)
         loss = F.cross_entropy(y_hat, y)
@@ -85,6 +110,16 @@ class ProtCNN(pl.LightningModule):
         return loss
 
     def validation_step(self, batch, batch_idx):
+        """
+        The validation step is executed on each batch of the validation data.
+        Args:
+            batch: one batch of the validation data
+            batch_idx: index of the batch
+
+        Returns:
+            acc: the accuracy of the model on this batch
+
+        """
         x, y = batch['sequence'], batch['target']
         y_hat = self(x)
         pred = torch.argmax(y_hat, dim=1)
@@ -94,6 +129,13 @@ class ProtCNN(pl.LightningModule):
         return acc
 
     def configure_optimizers(self):
+        """
+        Configure the optimizer and the learning rate scheduler.
+        Returns:
+            optimizer: the optimizer
+            lr_scheduler: the learning rate scheduler
+
+        """
         if self.optimizer == "adam":
             optimizer = torch.optim.Adam(self.parameters(), lr=self.learning_rate, weight_decay=self.weight_decay)
         else:

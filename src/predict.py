@@ -8,6 +8,11 @@ from src.utils import SequenceDataset
 
 
 def get_argparse_arguments():
+    """
+    Get arguments from the command line.
+    Returns: arguments from the command line as a python dictionary.
+
+    """
     # Create the parser
     parser = argparse.ArgumentParser(description='Train a model on the given dataset.')
 

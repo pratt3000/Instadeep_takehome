@@ -5,14 +5,25 @@ from data.make_dataset import reader
 
 
 class Lang:
+    """
+    Class for building the vocabulary and encoding the sequences.
+    """
     def __init__(self):
         self.voc = set()
         self.rare_AAs = {'X', 'U', 'B', 'O', 'Z'}
         self.default_tokens = {'<pad>': 0, '<unk>': 1}
 
     def build_vocab(self, data):
-        # Build the vocabulary
+        """
+        Build vocabulary and mapping from words to IDs.
+        Args:
+            data: data to build the vocabulary from.
 
+        Returns: mapping from words to IDs.
+
+        """
+
+        # Build the vocabulary
         for sequence in data:
             self.voc.update(sequence)
 
@@ -48,12 +59,29 @@ class SequenceDataset(torch.utils.data.Dataset):
         return {'sequence': seq, 'target': label}
 
     def encode_single_sample(self, x, y=None):
+        """
+        Encode a single sample. Used for predict function.
+        Args:
+            x: input sequence
+            y: output label
+
+        Returns: encoded input sequence and output label
+
+        """
         x = self.preprocess(x)
         if y:
             y = self.fam2label.get(y, self.fam2label['<unk>'])
         return x, y
 
     def preprocess(self, text):
+        """
+        Preprocess the input sequence.
+        Args:
+            text: input sequence.
+
+        Returns: one-hot encoded input sequence.
+
+        """
         seq = []
 
         # Encode into IDs
