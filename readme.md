@@ -103,8 +103,9 @@ coverage run -m pytest src/tests.py
 # Generate coverage report
 coverage report -m
 ```
-Generated Coverage report:
-![plot](reports/coverage_report/cr.png)
+Generated Coverage report:<br>
+<img src="reports/coverage_report/cr.png" alt="drawing" style="width:400px;"/>
+
 
    
 ## TODO:
