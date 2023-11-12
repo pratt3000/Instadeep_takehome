@@ -2,7 +2,8 @@
 
 ## Download data
 Download the data from <a href="https://www.kaggle.com/googleai/pfam-seed-random-split">here</a> and place it in a folder.
-It's expected that the folder structure is as follows: ```--data_dir = "data/random_split"``` <br>
+It's expected that the folder structure is as follows:
+```--data_dir = "data/random_split"```
 ```commandline
 data
 ├── random_split
@@ -11,7 +12,21 @@ data
 │   ├── train
 
 ```
-## Using Docker
+
+## Download model checkpoints
+
+Download any model checkpoint and put them in a folder. You can then specify the parameter as follows in scripts. <br>
+```commandline
+--model_checkpoint = "path/to/model_weights/sample.ckpt"
+```
+| Models       | Download link | test acc.    |
+|--------------|---------------|--------------|
+| Row 1 Cell 1 | Row 1 Cell 2  | Row 1 Cell 3 |
+| Row 2 Cell 1 | Row 2 Cell 2  | Row 2 Cell 3 |
+| Row 3 Cell 1 | Row 3 Cell 2  | Row 3 Cell 3 |
+
+
+## Run using Docker
 
 ### Docker setup.
 ```docker build . -t instadeep:latest```
@@ -47,16 +62,16 @@ Many other options are available as well, pl see ```python src/predict.py --help
 
 Many other options are available as well, pl see ```python src/evaluate.py --help```
 
-## Without docker
+## Run without docker
+(Tested on Python version 3.10.13)
 1. Install requirements: ```pip install -r requirements.txt```
 2. Export python path:
 ```export PYTHONPATH="${PYTHONPATH}:/Users/pratt/Documents/Instadeep_takehome/"```
-3. Run any of the above commands. (Tested on Python version 3.10)
+3. Run any of the above commands. 
 
 ## TODO:
 1. Add tests.
 2. Add more visualizations for training loss graphs.
 3. Add logger.
-5. Train new model.
-6. Create approach explaination pdf.
-7. Add huggingface support for models
+4. Train new model.
+5. Create approach explanation pdf.
