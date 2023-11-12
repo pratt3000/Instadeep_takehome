@@ -92,6 +92,21 @@ Many other options are available as well, pl see ```python src/evaluate.py --hel
    ```export PYTHONPATH="${PYTHONPATH}:/Users/pratt/Documents/Instadeep_takehome/"```
 3. Run any of the above commands.
 
+# Testing
+    
+We will be using pytest for this.<br>
+
+```commandline
+# Run tests
+coverage run -m pytest src/tests.py
+
+# Generate coverage report
+coverage report -m
+```
+Generated Coverage report:
+![plot](reports/coverage_report/cr.png)
+
+   
 ## TODO:
 
 1. Add tests.
