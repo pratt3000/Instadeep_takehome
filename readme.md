@@ -49,3 +49,5 @@ Many other options are available as well, pl see ```python src/evaluate.py --hel
 4. Add more comments.
 5. Train new model.
 6. Create approach explaination pdf.
+7. Add huggingface cupport for models
+8. Write for autodownload dataset if not present.
