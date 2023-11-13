@@ -6,6 +6,7 @@ import torch
 from torch.utils import data
 
 from data.make_dataset import reader, build_labels
+from src.logger import logger
 from src.model import ProtCNN
 from src.utils import Lang, SequenceDataset
 
@@ -48,6 +49,8 @@ if __name__ == "__main__":
     # Runs argparse
     args = get_argparse_arguments()
 
+    logger.info("PRATT LAUDA HAI!!!!!!!!")
+
     # Sets the seed
     pl.seed_everything(args.seed)
 
@@ -56,9 +59,9 @@ if __name__ == "__main__":
         device = "cuda" if torch.cuda.is_available() else "mps"
     else:
         if args.gpu:
-            print("Warning: --gpu is set but no GPU is found on this machine. Using CPU instead.")
+            logger.info("Warning: --gpu is set but no GPU is found on this machine. Using CPU instead.")
         device = "cpu"
-    print(f"Device: {device}")
+    logger.info(f"Device: {device}")
 
     # Reads data from data files.
     train_data, train_targets = reader("train", args.data_dir)
@@ -71,7 +74,7 @@ if __name__ == "__main__":
     # Build and get language.
     lang = Lang()
     word2id = lang.build_vocab(train_data)
-    print(f"AA dictionary formed. The length of dictionary is: {len(word2id)}.")
+    logger.info(f"AA dictionary formed. The length of dictionary is: {len(word2id)}.")
 
     # Create datasets.
     train_dataset = SequenceDataset(word2id, fam2label, args.max_seq_len, args.data_dir, "train")
@@ -110,7 +113,7 @@ if __name__ == "__main__":
         num_workers=args.num_workers,
         persistent_workers=True if args.num_workers > 0 else False,
     )
-    print(
+    logger.info(
         f"INPUT_SHAPE: {next(iter(dataloaders['test']))['sequence'].shape},"
         f" OUTPUT_SHAPE: {next(iter(dataloaders['test']))['target'].shape}"
     )
@@ -125,5 +128,5 @@ if __name__ == "__main__":
     )
 
     # Train model
-    trainer = pl.Trainer(accelerator=device, max_epochs=args.num_epochs, val_check_interval=1)
+    trainer = pl.Trainer(accelerator=device, max_epochs=args.num_epochs, val_check_interval=1000)
     trainer.fit(model, dataloaders['train'], dataloaders['dev'])

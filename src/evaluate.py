@@ -6,6 +6,7 @@ import torchmetrics
 from torch.utils import data
 from tqdm import tqdm
 
+from src.logger import logger
 from src.model import ProtCNN
 from src.utils import SequenceDataset
 
@@ -75,7 +76,7 @@ if __name__ == "__main__":
         device = "cuda" if torch.cuda.is_available() else "mps"
     else:
         if args.gpu:
-            print("Warning: --gpu is set but no GPU is found on this machine. Using CPU instead.")
+            logger.info("Warning: --gpu is set but no GPU is found on this machine. Using CPU instead.")
         device = "cpu"
 
     # Load model weight [Easier way]
@@ -103,4 +104,4 @@ if __name__ == "__main__":
     # Calculate accuracy
     num_classes = len(lang_params["fam2label"])
     accuracy = evaluate_model(model, test_dataloader, device)
-    print(f"Accuracy on the evaluation set: {accuracy * 100:.2f}%")
+    logger.info(f"Accuracy on the evaluation set: {accuracy * 100:.2f}%")

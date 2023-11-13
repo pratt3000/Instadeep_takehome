@@ -1,7 +1,7 @@
 import numpy as np
 import torch
 
-from data.make_dataset import reader
+from src.data.make_dataset import reader
 
 
 class Lang:
@@ -47,8 +47,10 @@ class SequenceDataset(torch.utils.data.Dataset):
 
         if data_path and not split:  # For external tests
             self.data, self.label = reader("NA", data_path, external_test=True)
-        if data_path and split:  # For when we are training
+        elif data_path and split:  # For when we are training
             self.data, self.label = reader(split, data_path)
+        else:
+            self.data = self.label = None
 
     def __len__(self):
         return len(self.data)

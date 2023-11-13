@@ -28,15 +28,13 @@ it in a folder. <br>
 
 Download any model checkpoint and put them in a folder. You can then specify the parameter as follows in scripts. <br>
 
-```commandline
---model_checkpoint = "path/to/model_weights/sample.ckpt"
-```
+```--model_checkpoint = "path/to/model_weights/sample.ckpt"```
 
-| Models       | Download link | test acc.    |
-|--------------|---------------|--------------|
-| Row 1 Cell 1 | Row 1 Cell 2  | Row 1 Cell 3 |
-| Row 2 Cell 1 | Row 2 Cell 2  | Row 2 Cell 3 |
-| Row 3 Cell 1 | Row 3 Cell 2  | Row 3 Cell 3 |
+| Models                                   | Download link                                                                                           | test acc.    |
+|------------------------------------------|---------------------------------------------------------------------------------------------------------|--------------|
+| Default ProtoCNN                         | <a href="https://drive.google.com/drive/folders/1lA6kCAmliLjnXIrbGhwNRSrR4cxWzb5S?usp=sharing">link</a> | 87.46%       |
+| Default ProtoCNN + hyperparameter tuning | Row 2 Cell 2                                                                                            | Row 2 Cell 3 |
+| Row 3 Cell 1                             | Row 3 Cell 2                                                                                            | Row 3 Cell 3 |
 
 ## Run using Docker
 
@@ -47,6 +45,7 @@ docker build . -t instadeep:latest
 ```
 
 ### Open docker bash
+
 ```commandline
 # CPU only
 docker run --rm -it --entrypoint bash instadeep:latest
@@ -66,6 +65,7 @@ Many other options are available as well, pl see ```python src/visualizations/vi
 ### Train model
 
 (Note: batch_size needs to be much smaller on CPU (bs=1). To use GPU use the --gpu flag.) <br>
+
 ```commandline
 python src/train.py --batch_size=256
 ```
@@ -99,6 +99,7 @@ Many other options are available as well, pl see ```python src/evaluate.py --hel
 ## Run without docker
 
 (Tested on Python version 3.10.13)
+
 ```commandline
 # Install requirements
 pip install -r requirements.txt
@@ -110,24 +111,28 @@ export PYTHONPATH="${PYTHONPATH}:/Users/pratt/Documents/Instadeep_takehome/"
 ```
 
 # Testing
-    
+
 We will be using pytest for this.<br>
 
 ```commandline
 # Run tests
-coverage run -m pytest src/tests.py
+coverage run -m pytest src/tests/
 
 # Generate coverage report
 coverage report -m
 ```
+
 Generated Coverage report:<br>
 <img src="reports/coverage_report/cr.png" alt="drawing" style="width:400px;"/>
 
+# Visualize results in tensorboard
 
-   
+```commandline
+tensorboard --logdir=path/to/tensorboard/folder/sample_folder
+```
+
 ## TODO:
 
-1. Add tests.
-2. Add logger.
-3. Train new model.
-4. Create approach explanation pdf.
+1. Add logger.
+2. Train new model.
+3. Create approach explanation pdf.

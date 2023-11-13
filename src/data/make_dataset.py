@@ -2,6 +2,8 @@ import os
 
 import pandas as pd
 
+from src.logger import logger
+
 
 def reader(partition, data_path, external_test=False):
     """
@@ -40,6 +42,6 @@ def build_labels(targets):
     fam2label = {target: i for i, target in enumerate(unique_targets, start=1)}
     fam2label['<unk>'] = 0
 
-    print(f"There are {len(fam2label)} types of labels.")
+    logger.info(f"There are {len(fam2label)} types of labels.")
 
     return fam2label

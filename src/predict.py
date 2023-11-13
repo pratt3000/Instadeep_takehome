@@ -3,6 +3,7 @@ import pickle
 
 import torch
 
+from src.logger import logger
 from src.model import ProtCNN
 from src.utils import SequenceDataset
 
@@ -39,7 +40,7 @@ if __name__ == "__main__":
         device = "cuda" if torch.cuda.is_available() else "mps"
     else:
         if args.gpu:
-            print("Warning: --gpu is set but no GPU is found on this machine. Using CPU instead.")
+            logger.info("Warning: --gpu is set but no GPU is found on this machine. Using CPU instead.")
         device = "cpu"
 
     # Load model weight [Easier way]
@@ -68,5 +69,5 @@ if __name__ == "__main__":
     pred = label2fam[pred[0].argmax().item()]
 
     # Print values.
-    print("Your Input was :: ", args.input_seq)
-    print("Your Output is :: ", pred)
+    logger.info("Your Input was :: ", args.input_seq)
+    logger.info("Your Output is :: ", pred)
