@@ -7,3 +7,5 @@ __pycache__/
 .idea/
 lightning_logs/*
 .DS_Store
+.pytest_cache
+.coverage
