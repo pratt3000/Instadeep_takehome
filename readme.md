@@ -26,15 +26,19 @@ it in a folder. <br>
 
 ### Download model checkpoints
 
-Download any model checkpoint and put them in a folder. You can then specify the parameter as follows in scripts. <br>
+Download any model checkpoint and put them in a folder. You can then specify the parameters as follows in scripts. <br>
 
-```--model_checkpoint = "path/to/model_weights/sample.ckpt"```
+```commandline
+--model_checkpoint = "path/to/model_weights/sample.ckpt"
+--lang_params = "path/to/lang_params/sample.pickle"
+# and so on...
+```
 
-| Models                                   | Download link                                                                                           | test acc.    |
-|------------------------------------------|---------------------------------------------------------------------------------------------------------|--------------|
-| Default ProtoCNN                         | <a href="https://drive.google.com/drive/folders/1lA6kCAmliLjnXIrbGhwNRSrR4cxWzb5S?usp=sharing">link</a> | 87.46%       |
-| Default ProtoCNN + hyperparameter tuning | Row 2 Cell 2                                                                                            | Row 2 Cell 3 |
-| Row 3 Cell 1                             | Row 3 Cell 2                                                                                            | Row 3 Cell 3 |
+| Models                                                  | Download link (weights)                                                                                 | test accuracy |
+|---------------------------------------------------------|---------------------------------------------------------------------------------------------------------|---------------|
+| Default ProtoCNN                                        | <a href="https://drive.google.com/drive/folders/1lA6kCAmliLjnXIrbGhwNRSrR4cxWzb5S?usp=sharing">link</a> | 87.46%        |
+| Default ProtoCNN + hyperparameter tuning                | <a href="https://drive.google.com/drive/folders/1pujYRdtBHDo8qjIcWNMUactUZkHlXaYs?usp=sharing">link</a> | 90.08%        |
+| Custom Model (more details in Approach_explanation.pdf) | <a href="https://drive.google.com/drive/folders/1HSPByzMYOPxCiWCT-eAXSsOtNDArLEOS?usp=sharing">link</a> | 91.31%        |
 
 ## Run using Docker
 
@@ -128,11 +132,10 @@ Generated Coverage report:<br>
 # Visualize results in tensorboard
 
 ```commandline
+# Run tensorboard by locating the tf_events file.
 tensorboard --logdir=path/to/tensorboard/folder/sample_folder
 ```
 
 ## TODO:
 
-1. Add logger.
-2. Train new model.
-3. Create approach explanation pdf.
+1. Create approach explanation pdf.
