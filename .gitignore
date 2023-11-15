@@ -9,3 +9,4 @@ lightning_logs/*
 .DS_Store
 .pytest_cache
 .coverage
+Instadeep_takehome.bundle
