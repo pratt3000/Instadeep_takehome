@@ -69,5 +69,5 @@ if __name__ == "__main__":
     pred = label2fam[pred[0].argmax().item()]
 
     # Print values.
-    logger.info("Your Input was :: ", args.input_seq)
-    logger.info("Your Output is :: ", pred)
+    logger.info(f"Your Input was :: {args.input_seq}")
+    logger.info(f"Your Output is :: {pred}")

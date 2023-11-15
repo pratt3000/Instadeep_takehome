@@ -49,8 +49,6 @@ if __name__ == "__main__":
     # Runs argparse
     args = get_argparse_arguments()
 
-    logger.info("PRATT LAUDA HAI!!!!!!!!")
-
     # Sets the seed
     pl.seed_everything(args.seed)
 

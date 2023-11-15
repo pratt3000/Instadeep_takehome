@@ -87,7 +87,7 @@ Many other options are available as well, pl see ```python src/visualizations/vi
 ### Get prediction for a single test sample
 
 ```commandline
-python src/predict.py --input_seq="ABCDE" --model_checkpoint="lightning_logs/version_10/checkpoints/epoch=2-step=12738.ckpt"
+python src/predict.py --input_seq="Protein_seq" --model_checkpoint="lightning_logs/version_10/checkpoints/epoch=2-step=12738.ckpt"
 ```
 
 Many other options are available as well, pl see ```python src/predict.py --help```
@@ -105,11 +105,11 @@ Many other options are available as well, pl see ```python src/evaluate.py --hel
 (Tested on Python version 3.10.13)
 
 ```commandline
-# Install requirements
+# Install requirements (python 3.10)
 pip install -r requirements.txt
 
 # Export python path
-export PYTHONPATH="${PYTHONPATH}:/Users/pratt/Documents/Instadeep_takehome/"
+export PYTHONPATH="${PYTHONPATH}:full/path/to/the/folder/Instadeep_takehome/"
 
 """Run any of the above commands now."""
 ```

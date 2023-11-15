@@ -6,7 +6,6 @@ import pandas as pd
 import seaborn as sns
 
 from src.data.make_dataset import reader
-from src.logger import logger
 
 
 def get_argparse_arguments():
@@ -85,7 +84,7 @@ def generate_aminoacid_freq_distribution_graph(data, partition):
 
 
 if __name__ == "__main__":
-    logger.info("This function may take a while to run...")
+    print("This function may take a while to run...")
 
     # Get the arguments
     args = get_argparse_arguments()
@@ -107,8 +106,14 @@ if __name__ == "__main__":
     elif args.partition == "test":
         input_data = test_data
         label_data = test_targets
+    else:
+        print("Invalid partition: Pl choose between all, train, valid, test.")
+        input_data = None
+        label_data = None
 
-    generate_label_distribution_graph(label_data, args.partition)
-    generate_seq_len_distribution_graph(input_data, args.partition)
-    generate_aminoacid_freq_distribution_graph(train_data, args.partition)
-    logger.info(f"Images saved to {args.data_dir}")
+    if input_data is not None and label_data is not None:
+
+        generate_label_distribution_graph(label_data, args.partition)
+        generate_seq_len_distribution_graph(input_data, args.partition)
+        generate_aminoacid_freq_distribution_graph(train_data, args.partition)
+        print(f"Images saved to {args.data_dir}")

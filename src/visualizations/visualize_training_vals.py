@@ -4,8 +4,6 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import seaborn as sns
 
-from src.logger import logger
-
 
 def get_argparse_arguments():
     # Create the parser
@@ -69,7 +67,7 @@ def generate_graph_loss(df, save_path, x_axis):
 
 
 if __name__ == "__main__":
-    logger.info("This function may take a while to run...")
+    print("This function may take a while to run...")
 
     # Get the arguments
     args = get_argparse_arguments()
