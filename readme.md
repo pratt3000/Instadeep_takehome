@@ -34,11 +34,11 @@ Download any model checkpoint and put them in a folder. You can then specify the
 # and so on...
 ```
 
-| Models                                                  | Download link (weights)                                                                                 | test accuracy |
-|---------------------------------------------------------|---------------------------------------------------------------------------------------------------------|---------------|
-| Default ProtoCNN                                        | <a href="https://drive.google.com/drive/folders/1lA6kCAmliLjnXIrbGhwNRSrR4cxWzb5S?usp=sharing">link</a> | 87.46%        |
-| Default ProtoCNN + hyperparameter tuning                | <a href="https://drive.google.com/drive/folders/1pujYRdtBHDo8qjIcWNMUactUZkHlXaYs?usp=sharing">link</a> | 90.08%        |
-| Custom Model (more details in Approach_explanation.pdf) | <a href="https://drive.google.com/drive/folders/1HSPByzMYOPxCiWCT-eAXSsOtNDArLEOS?usp=sharing">link</a> | 91.31%        |
+| Models                                                                             | Download link (weights)                                                                                 | test accuracy |
+|------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------|---------------|
+| Default ProtoCNN                                                                   | <a href="https://drive.google.com/drive/folders/1lA6kCAmliLjnXIrbGhwNRSrR4cxWzb5S?usp=sharing">link</a> | 87.46%        |
+| Default ProtoCNN + hyperparameter tuning                                           | <a href="https://drive.google.com/drive/folders/1pujYRdtBHDo8qjIcWNMUactUZkHlXaYs?usp=sharing">link</a> | 90.08%        |
+| Custom Model (more details in [Model Specification](#custom-model-specification))  | <a href="https://drive.google.com/drive/folders/1HSPByzMYOPxCiWCT-eAXSsOtNDArLEOS?usp=sharing">link</a> | 92.31%        |
 
 ## Run using Docker
 
@@ -136,6 +136,12 @@ Generated Coverage report:<br>
 tensorboard --logdir=path/to/tensorboard/folder/sample_folder
 ```
 
-## TODO:
-
-1. Create approach explanation pdf.
+# Custom Model Specification
+1. I modified the architecture of the model by increasing the residual blocks and changing the input and output 
+   channels and made other small changes.
+2. The model architecture is as follows: default proto_cNN (left), modified bigger model (right)
+3. Note: To run the bigger model we'll have to do more changes like changes to the class ProtoCNN as well. It won't work out of box. 
+<p float="left">
+   <img src="reports/model_arch/ProtoCNN_default.png" alt="drawing" style="width:400px;"/>
+   <img src="reports/model_arch/Large_model_377M.png" alt="drawing" style="width:400px;"/> <br>
+</p>
