@@ -7,7 +7,6 @@ from src.utils import SequenceDataset, Lang
 
 
 def test_SequenceDataset():
-
     with open("lightning_logs/lang_params.pickle", 'rb') as handle:
         lang_params = pickle.load(handle)
 
@@ -51,6 +50,7 @@ def test_SequenceDataset():
     assert lang_encoder.data is not None
     assert lang_encoder.label is not None
     assert len(lang_encoder.data) == len(lang_encoder.label)
+
 
 def test_build_vocab():
     lang = Lang()

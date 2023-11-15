@@ -112,7 +112,6 @@ if __name__ == "__main__":
         label_data = None
 
     if input_data is not None and label_data is not None:
-
         generate_label_distribution_graph(label_data, args.partition)
         generate_seq_len_distribution_graph(input_data, args.partition)
         generate_aminoacid_freq_distribution_graph(train_data, args.partition)
