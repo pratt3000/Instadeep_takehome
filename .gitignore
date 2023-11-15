@@ -1,6 +1,4 @@
 data/*
-model_weights/*
-
 __pycache__/
 ```
 .vscode
