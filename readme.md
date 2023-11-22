@@ -1,3 +1,6 @@
+# About
+Protein domain prediction (for over 17000+ types of protein strings)
+
 # How to run:
 
 ## Downloading
